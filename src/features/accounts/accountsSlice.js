@@ -3,14 +3,17 @@ const initStateAccount = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
+  isLoading: false,
 };
 
 export default function accountReducer(state = initStateAccount, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case "loading":
+      return { ...state, isLoading: true };
     case "account/deposit":
-      return { ...state, balance: state.balance + payload };
+      return { ...state, balance: state.balance + payload, isLoading: false };
     case "account/withdraw":
       return { ...state, balance: state.balance - payload };
     case "account/requestLoan": {
@@ -31,8 +34,20 @@ export default function accountReducer(state = initStateAccount, action) {
 }
 
 // ACTION CREATORS ACCOUNT
-export function deposit(amount) {
-  return { type: "account/deposit", payload: amount };
+export function deposit(amount, currency) {
+  if (currency === "USD") return { type: "account/deposit", payload: amount };
+
+  return async function (dispatch, getState) {
+    dispatch({ type: "loading" });
+    // API call
+    const resp = await fetch(
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
+    );
+    const data = await resp.json();
+    const toUSDAmount = data.rates.USD;
+    // return action
+    dispatch({ type: "account/deposit", payload: toUSDAmount });
+  };
 }
 export function withdraw(amount) {
   return { type: "account/deposit", payload: amount };
