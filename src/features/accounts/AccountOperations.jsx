@@ -27,7 +27,7 @@ function AccountOperations() {
 
   function handleRequestLoan() {
     if (!loanAmount || !loanPurpose || loan) return;
-    dispatch(requestLoan(loanAmount, loanPurpose));
+    dispatch(requestLoan({ amount: loanAmount, purpose: loanPurpose }));
     setLoanAmount("");
     setLoanPurpose("");
   }
