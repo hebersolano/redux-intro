@@ -37,7 +37,7 @@ export default function accountReducer(state = initStateAccount, action) {
 export function deposit(amount, currency) {
   if (currency === "USD") return { type: "account/deposit", payload: amount };
 
-  return async function (dispatch, getState) {
+  return async function (dispatch) {
     dispatch({ type: "loading" });
     // API call
     const resp = await fetch(
