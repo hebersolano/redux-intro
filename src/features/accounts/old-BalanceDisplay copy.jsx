@@ -17,4 +17,5 @@ function mapStateToProps(state) {
   };
 }
 
+// old way to pass state into a component as props
 export default connect(mapStateToProps)(BalanceDisplay);

@@ -7,5 +7,5 @@ React project from the [Ultimate React Course](https://github.com/jonasschmedtma
 - classic redux:
   - redux: create reducers and combine them for a store,`createStore` (deprecated), `combineReducers`
   - react-redux: `useSelector`, `useDispatch`, `connect` and the mapStateToProps function to pass state as props
+  - `redux thunk` middleware for asynchronous code with `applyMiddleware`
 - Modern Redux:
-  - `redux thunk` middleware for asynchronous code
